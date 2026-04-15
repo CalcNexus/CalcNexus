@@ -68,19 +68,20 @@ header#cabecalho {
     width: 100%;
 }
 
+
 /* ============================================================
-   2. CABEÇALHO - BOTÃO COM DIMENSÕES FLUIDAS (VW)
+   2. CABEÇALHO - BOTÃO COM DIMENSÕES ESTÁVEIS (CLAMP & REM)
    ============================================================ */
 header#cabecalho button {
-    /* Margem superior proporcional à altura da tela */
-    margin-top: 5vh; 
+    /* Margem superior: limite de 20px a 50px para não fugir da tela */
+    margin-top: clamp(20px, 5vh, 50px); 
 
-    /* Tamanho da fonte baseado na largura da tela (como uma %) */
-    /* 1.2vw funciona como 1.2% da largura da janela */
-    font-size: 1.2vw; 
+    /* Fonte: Mínimo 16px (1rem), Ideal 1.2vw, Máximo 20px */
+    /* O uso de 'rem' garante que o zoom do navegador funcione corretamente */
+    font-size: clamp(1rem, 1.2vw, 1.25rem); 
 
-    /* Padding usando vw para que a largura/altura do botão mude com a tela */
-    padding: 1vw 2.5vw;
+    /* Padding: Mantém a proporção sem explodir no zoom baixo */
+    padding: clamp(10px, 1vw, 18px) clamp(24px, 2.5vw, 45px);
 
     border-radius: 50px;
     font-weight: 700;
@@ -89,39 +90,41 @@ header#cabecalho button {
     max-width: fit-content;
     display: inline-block;
     transition: transform 0.2s ease;
-
 }
 
+/* --- MEDIA QUERIES --- */
 
 @media (max-width: 320px) {
     header#cabecalho button {
-        font-size: 6vw; /* No celular, o botão ocupa uma proporção visual maior */
-        padding: 3vw 8vw;
-        margin-top: 30px;
+        /* Em telas muito pequenas, usamos rem para consistência */
+        font-size: 0.9rem; 
+        padding: 10px 20px;
+        margin-top: 25px;
     }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
     header#cabecalho button {
-        font-size: 5vw;
-        padding: 3vw 8vw;
+        font-size: 1rem;
+        padding: 12px 28px;
         margin-top: 30px;
     }
 }
 
 @media (min-width: 480px) and (max-width: 600px) {
     header#cabecalho button {
-        font-size: 4.5vw; 
-        padding: 2vw 5vw;
+        /* O clamp aqui ajuda a transição entre celular e tablet */
+        font-size: clamp(1rem, 4.5vw, 1.1rem); 
+        padding: 12px 30px;
     }
 }
 
-/* Ajuste para telas menores (Tablets e Celulares) */
-/* Em telas pequenas, 1.2vw fica minúsculo, então aumentamos a "porcentagem" */
+/* Ajuste para tablets (iPad, etc) */
 @media (min-width: 600px) and (max-width: 1024px) {
     header#cabecalho button {
-        font-size: 2.5vw; 
-        padding: 1.5vw 4vw;
+        /* Fixamos o tamanho máximo para evitar o erro do zoom nessa faixa */
+        font-size: clamp(1.1rem, 2.5vw, 1.2rem); 
+        padding: 14px 35px;
     }
 }
 
